@@ -48,8 +48,10 @@ def get_layers(layers, only_visible):
 	return result
 
 
-def export_layers(img, drw, path, only_visible=True, flatten=False, remove_offsets=False, crop=False):
+def export_layers(img, drw, use_img_path, path, only_visible=True, flatten=False, remove_offsets=False, crop=False):
 	dupe = img.duplicate()
+	if use_img_path:
+		path = os.path.dirname(img.filename)
 	layers = get_layers(dupe.layers, only_visible)
 
 	for layer in layers:
@@ -79,7 +81,8 @@ register(
 	params=[
 		(PF_IMAGE, "img", "Image", None),
 		(PF_DRAWABLE, "drw", "Drawable", None),
-		(PF_DIRNAME, "path", "Save PNGs here", os.getcwd()),
+		(PF_BOOL, "use_img_path", "Save at Image Path", True),
+		(PF_DIRNAME, "path", "Alternate Save Path", os.getcwd()),
 		(PF_BOOL, "only_visible", "Only Visible Layers?", True),
 		(PF_BOOL, "flatten", "Flatten Images?", False),
 		(PF_BOOL, "remove_offsets", "Remove Offsets?", False),
