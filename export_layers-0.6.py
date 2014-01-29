@@ -15,10 +15,10 @@ import os, re
 gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
 
 def format_filename(img, layer):
-	imgname = img.name.decode('utf-8')
+	imgname = os.path.splitext(img.name.decode('utf-8'))[0]
 	layername = layer.name.decode('utf-8')
 	regex = re.compile("[^-\w]", re.UNICODE) 
-	filename = regex.sub('_', imgname) + '-' + regex.sub('_', layername) + '.png'
+	filename = regex.sub('_', imgname) + '_' + regex.sub('_', layername) + '.png'
 	return filename
 
 def get_layers(layers, only_visible):
